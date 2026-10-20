@@ -12,3 +12,6 @@ bazel-*
 
 # macOS
 .DS_Store
+
+# CMake build directory
+cmake-build/

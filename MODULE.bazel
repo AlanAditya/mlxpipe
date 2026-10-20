@@ -1,4 +1,6 @@
-bazel_dep(name = "rules_cc", version = "0.0.9")
+# apple_support must come before rules_cc so its Xcode-aware toolchain wins.
+bazel_dep(name = "apple_support", version = "2.10.1", repo_name = "build_bazel_apple_support")
+bazel_dep(name = "rules_cc", version = "0.2.26")
 new_local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 

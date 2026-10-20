@@ -15,26 +15,27 @@ namespace mlx_vision {
 
 // A simple structure to represent a detection
 struct Detection {
-    float x;
-    float y;
-    float width;
-    float height;
-    float confidence;
+    float x = 0.0f;
+    float y = 0.0f;
+    float width = 0.0f;
+    float height = 0.0f;
+    float confidence = 0.0f;
     std::vector<std::pair<float, float>> keypoints;
 };
 
 struct Landmark {
-    float x;
-    float y;
-    float z;
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
 };
 
 struct HandResult {
-    Detection box;
+    Detection box; // normalized axis-aligned bounds of the 21 landmarks
     std::vector<Landmark> landmarks; // 21 landmarks
-    std::vector<Landmark> world_landmarks; // 21 3D landmarks
-    float score;
-    bool is_left_hand;
+    std::vector<Landmark> world_landmarks; // 21 3D landmarks, metres, hand-centred
+    float score = 0.0f;
+    // MediaPipe convention: assumes a mirrored (selfie) input image.
+    bool is_left_hand = false;
 };
 
 // Initialize the MLX backend and load models. Returns true if successful.

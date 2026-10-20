@@ -26,17 +26,18 @@ std::vector<Detection> DecodeTensorsToDetections(
     for (int i = 0; i < options.num_boxes; ++i) {
         int box_offset = i * options.num_coords + options.box_coord_offset;
         
+        // Matches MediaPipe: reverse_output_order selects XYWH, otherwise YXHW.
         float x_center, y_center, w, h;
         if (options.reverse_output_order) {
-            y_center = raw_boxes[box_offset];
-            x_center = raw_boxes[box_offset + 1];
-            h = raw_boxes[box_offset + 2];
-            w = raw_boxes[box_offset + 3];
-        } else {
             x_center = raw_boxes[box_offset];
             y_center = raw_boxes[box_offset + 1];
             w = raw_boxes[box_offset + 2];
             h = raw_boxes[box_offset + 3];
+        } else {
+            y_center = raw_boxes[box_offset];
+            x_center = raw_boxes[box_offset + 1];
+            h = raw_boxes[box_offset + 2];
+            w = raw_boxes[box_offset + 3];
         }
         
         // Decode coordinates
@@ -69,11 +70,11 @@ std::vector<Detection> DecodeTensorsToDetections(
             for (int k = 0; k < options.num_keypoints; ++k) {
                 float kx, ky;
                 if (options.reverse_output_order) {
-                    ky = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint];
-                    kx = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint + 1];
-                } else {
                     kx = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint];
                     ky = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint + 1];
+                } else {
+                    ky = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint];
+                    kx = raw_boxes[box_offset + options.keypoint_coord_offset + k * options.num_values_per_keypoint + 1];
                 }
                 kx = kx / options.x_scale * anchors[i].w + anchors[i].x_center;
                 ky = ky / options.y_scale * anchors[i].h + anchors[i].y_center;

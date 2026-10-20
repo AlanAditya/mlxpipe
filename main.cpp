@@ -55,9 +55,9 @@ int main(int argc, char** argv) {
             cv::Rect rect(x, y, width, height);
             cv::rectangle(frame, rect, cv::Scalar(0, 255, 0), 2);
             
-            // Draw score
+            // Draw handedness and score
             char score_text[32];
-            snprintf(score_text, sizeof(score_text), "Hand: %.2f", hand.score);
+            snprintf(score_text, sizeof(score_text), "%s: %.2f", hand.is_left_hand ? "Left" : "Right", hand.score);
             cv::putText(frame, score_text, cv::Point(x, y - 5), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 1);
             
             // Draw Landmarks

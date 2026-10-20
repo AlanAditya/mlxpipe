@@ -10,6 +10,9 @@ struct NmsOptions {
     float min_suppression_threshold = 0.3f;
     int max_num_detections = -1;
     float min_score_threshold = 0.0f;
+    // MediaPipe's WEIGHTED algorithm: blend each kept box with the boxes it
+    // suppresses, weighted by score, instead of discarding them.
+    bool weighted = false;
 };
 
 // Applies Non-Maximum Suppression to filter out overlapping bounding boxes.
