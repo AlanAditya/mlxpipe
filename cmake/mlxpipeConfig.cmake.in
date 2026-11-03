@@ -1,0 +1,8 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(MLX CONFIG)
+find_dependency(OpenCV COMPONENTS core imgproc geometry)
+
+include("${CMAKE_CURRENT_LIST_DIR}/mlxpipeTargets.cmake")
+check_required_components(mlxpipe)
